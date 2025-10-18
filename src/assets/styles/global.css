@@ -25,12 +25,21 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-*{
-  font-family: "Roboto", sans-serif !important;
+/* Import Circular Std font */
+@import url('https://fonts.cdnfonts.com/css/circular-std');
+
+/* OR if using self-hosted fonts */
+/* @import './fonts.css'; */
+
+/* Apply Circular Std globally */
+* {
+  font-family: 'Circular Std', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
   letter-spacing: 0.0333333333em !important;
+
 }
 
 body {
+  font-family: 'Circular Std', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
@@ -165,7 +174,9 @@ h1 {
   color: #4b53ff !important;
 }
 
-
+.cursor-pointer {
+  cursor: pointer;
+}
 
 .text-header{
     font-size: 18px !important;
