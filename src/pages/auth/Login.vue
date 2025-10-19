@@ -72,7 +72,7 @@
                     <div class="text-center">
                       <v-btn
                         type="submit"
-                        size="large"
+                        size="large" rounded="lg"
                         class="login-btn px-12"
                         elevation="0"
                       >
@@ -104,7 +104,7 @@ const handleLogin = () => {
 
 <style scoped>
 .login-main {
-  background: linear-gradient(135deg, #8f0f20 0%, #8f0f20 100%);
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary) 100%);
   min-height: 100vh;
 }
 
@@ -115,13 +115,13 @@ const handleLogin = () => {
 }
 
 .left-section {
-  background: linear-gradient(135deg, #8f0f20 0%, #8f0f20 100%);
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary) 100%);
   color: white;
   min-height: 400px;
 }
 
 .right-section {
-  background: linear-gradient(135deg, #8f0f20 0%, #8f0f20 100%);
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary) 100%);
   color: white;
 }
 
@@ -133,13 +133,6 @@ const handleLogin = () => {
 .logo {
   width: 100%;
   height: 100%;
-}
-
-.circle-text {
-  fill: white;
-  font-size: 11px;
-  font-weight: 500;
-  letter-spacing: 0.5px;
 }
 
 .welcome-text {
@@ -193,8 +186,5 @@ const handleLogin = () => {
     height: 120px;
   }
   
-  .circle-text {
-    font-size: 9px;
-  }
 }
 </style>

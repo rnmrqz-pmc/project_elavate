@@ -13,9 +13,15 @@ const routes: RouteRecordRaw[] = [
   },
   { path: '/login', name: 'Login', component: () => import('../pages/auth/Login.vue'),
     meta: { requiresAuth: false }
-  }
+  },
+  { path: '/reset', name: 'reset', component: () => import('../pages/auth/Reset.vue'), 
+    meta: { requiresAuth: false } 
+  },
 
-  
+  { path: '/quiz', name: 'quiz', component: () => import('../pages/QuizCreator2.vue'), 
+    meta: { requiresAuth: false } 
+  },
+
 
 ]
 
