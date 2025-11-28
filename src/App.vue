@@ -14,8 +14,8 @@ import { ref, computed, onMounted, getCurrentInstance } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useSessionStore } from './stores/session'
 import { useMXStore } from './stores/mx'
-import Sidebar from '@/components/common/Sidebar.vue'
-import GlobalAlert from '@/components/common/GlobalAlert.vue'
+import Sidebar from '@/components/layout/Sidebar.vue'
+import GlobalAlert from '@/components/ui/GlobalAlert.vue'
 
 const mx = useMXStore();
 const session = useSessionStore();

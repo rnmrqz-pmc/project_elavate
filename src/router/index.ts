@@ -5,22 +5,35 @@ const BASE_PATH = import.meta.env.VITE_BASE_PATH as string
 
 // ---- Route Definitions ----
 const routes: RouteRecordRaw[] = [
-  { path: '/test', name: 'test', component: () => import('../pages/test.vue'), 
-    meta: { requiresAuth: false } 
-  },
   { path: '/', name: 'Root', redirect: '/login',
-    meta: { requiresAuth: false } 
-  },
-  { path: '/login', name: 'Login', component: () => import('../pages/auth/Login.vue'),
     meta: { requiresAuth: false }
   },
-  { path: '/reset', name: 'reset', component: () => import('../pages/auth/Reset.vue'), 
-    meta: { requiresAuth: false } 
+  { path: '/login', name: 'Login', component: () => import('../views/auth/Login.vue'),
+    meta: { requiresAuth: false }
+  },
+  { path: '/reset', name: 'reset', component: () => import('../views/auth/Reset.vue'),
+    meta: { requiresAuth: false }
   },
 
-  { path: '/quiz', name: 'quiz', component: () => import('../pages/QuizCreator2.vue'), 
-    meta: { requiresAuth: false } 
+  { path: '/quiz', name: 'quiz', component: () => import('../views/QuizCreator2.vue'),
+    meta: { requiresAuth: false }
   },
+   { path: '/sidebar', name: 'sidebar', component: () => import('../views/Side.vue'),
+    meta: { requiresAuth: false }
+  },
+  { path: '/calendar', name: 'calendar', component: () => import('../views/Calendar.vue'),
+    meta: { requiresAuth: false }
+  },
+  { path: '/email', name: 'email', component: () => import('../views/EmailGenerator.vue'),
+    meta: { requiresAuth: false }
+  },
+  { path: '/profile', name: 'profile', component: () => import('../views/Profile.vue'),
+    meta: { requiresAuth: false }
+  },
+  { path: '/trainees', name: 'trainees', component: () => import('../views/Trainee.vue'),
+    meta: { requiresAuth: false }
+  },
+
 
 
 ]
@@ -36,7 +49,7 @@ const router = createRouter({
 
 // ---- Navigation Guards ----
 // Handles authentication, 2FA, and role-based access before each route change
-router.beforeEach((to, from, next) => {
+router.beforeEach((_to, _from, next) => {
   // const session = useSessionStore()
   // const isLoggedIn = !!session.user
 

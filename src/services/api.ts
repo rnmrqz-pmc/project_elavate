@@ -1,28 +1,19 @@
-import { App } from 'vue'
 import axios from 'axios'
-import type { AxiosResponse } from 'axios'
-import { encodeBase64, decodeBase64 } from '@/utils/base64'
-import { decrypt, encrypt } from '@/utils/encryptDecrypt'
-import { paramsGenerator } from '@/utils/paramsgenerator'
-
 
 // ---- Environment Variables ----
-const API_KEY = import.meta.env.VITE_API_KEY as string
 const BASE_API_LINK = import.meta.env.VITE_BASE_API as string
 
-const base64Key = encodeBase64(API_KEY)
-
-
 // ---- Axios Clients ----
-const apiClient = axios.create({
-  baseURL: `${BASE_API_LINK}/api`, 
+export const apiClient = axios.create({
+  baseURL: `${BASE_API_LINK}/api`,
   headers: {
     'Content-Type': 'application/json',
   }
 })
+
 // File upload client (uses multipart/form-data)
-const fileClient = axios.create({
-  baseURL: `${BASE_API_LINK}/api`, 
+export const fileClient = axios.create({
+  baseURL: `${BASE_API_LINK}/api`,
   headers: {
     'Content-Type': 'multipart/form-data',
   }
@@ -32,8 +23,7 @@ const fileClient = axios.create({
 apiClient.interceptors.request.use(
   async (config) => {
     const token = localStorage.getItem('auth_token')
-    if (token) {  
-      // config.headers['X-API-KEY'] = token
+    if (token) {
       config.headers.Authorization = `Bearer ${token}`
     }
     return config
@@ -69,7 +59,7 @@ apiClient.interceptors.response.use(
 fileClient.interceptors.request.use(
   async (config) => {
     const token = localStorage.getItem('auth_token')
-    if (token) {  
+    if (token) {
       config.headers['X-API-KEY'] = token
       config.headers.Authorization = `Bearer ${token}`
     }
@@ -79,25 +69,3 @@ fileClient.interceptors.request.use(
     return Promise.reject(error)
   }
 )
-
-
-
-// ---- API Methods ----
-const api = {
-  // ---- Authentication ----
-    async getStaging(payload: any): Promise<AxiosResponse<any>> {
-        return apiClient.get<any>(`/auth/staging?${paramsGenerator(payload)}`)
-    },
-
-
-}
-
-
-// ---- Vue Plugin ----
-export default {
-  install: (app: App) => {
-    app.config.globalProperties.$api = api
-  }
-}
-
-export type ApiType = typeof api

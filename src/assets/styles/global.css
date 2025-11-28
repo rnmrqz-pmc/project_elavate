@@ -4,7 +4,7 @@
 
 :root {
   --color-primary: #8f0f20;
-  --color-primary-accent: #c4293d;
+  --color-primary-accent: #d53b50;
   --color-secondary: #666;
   --color-bg: #f5f5f5;
   --color-text: rgba(24, 24, 24, 0.87);
@@ -81,7 +81,7 @@ h1 {
   }
 }
 .--bg-main {
-    background-color: var(--color-primary);
+    background-color: var(--color-primary) !important;
 }
 ::-webkit-scrollbar {
   width: 4px;
@@ -131,7 +131,7 @@ h1 {
 }
 
 .v-autocomplete__content .v-list-item--active {
-  background-color: #d0ff9b !important;
+  background-color: var(--color-primary-accent) !important;
   color: #141414 !important;
   font-weight: 700 !important;
 }
@@ -160,12 +160,12 @@ h1 {
 .v-list-item--active.v-list-item--active.customNav{
   color: black !important;
   /* margin: 0px 6px; */
-  border-radius: 10px !important;
-  background-color: #d9ffae !important;
+  /* border-radius: 10px !important; */
+  background-color: var(--color-primary-accent) !important;
   transition: all 0.2s ease-in-out !important;
 }
 .v-list-item--active.customNav div{
-  color: #4b53ff !important;
+  color: white !important;
 }
 
 .cursor-pointer {
@@ -444,6 +444,23 @@ h1 {
   color: white !important;
 }
 
+
+.hover-y {
+    transition: all 0.3s ease;
+}
+.hover-y:hover {
+    transform: translateY(-2px);
+    box-shadow: 6px 8px 12px rgba(102, 126, 234, 0.15) !important;
+}
+.hover-x {
+    transition: all 0.3s ease;
+}
+.hover-x:hover {
+    transform: translateX(2px);
+    box-shadow: 2px 4px 10px rgba(102, 126, 234, 0.15) !important;
+}
+
+
 /* .info-item:hover {
     transform: translateY(-2px);
     box-shadow: 0 8px 25px rgba(102, 126, 234, 0.15);
@@ -543,4 +560,7 @@ h1 {
 .v-field.v-field--variant-plain .v-field__field .v-field__input{
   /* background-color: red; */
   padding-top: 0px !important;
+}
+.v-list-group__items .v-list-item{
+  padding-inline-start: 20px !important;
 }

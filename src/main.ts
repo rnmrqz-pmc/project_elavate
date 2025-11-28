@@ -3,7 +3,7 @@ import { createPinia } from "pinia"
 import App from './App.vue'
 import router from './router'
 import { aliases, mdi } from 'vuetify/iconsets/mdi'
-import apiPlugin from './api/index'
+import apiPlugin from './services/index'
 
 // Vuetify imports
 import 'vuetify/styles'

@@ -1,105 +1,120 @@
 <template>
   <!-- Sidebar -->
-    <v-app-bar v-if="session.user" app height="70" 
-    :class="`pa-0 ma-0`" fixed :color="mx.isMobile || mx.isTablet ? 'blue-accent-4' : 'white'" elevation="2" >
-     <v-toolbar-title class=" drawer-title --bg-main align-content-center" style="width: 250px;">
-      <div class="d-flex justify-center">
-          <img class="py-2"
-            src="../../assets/images/Elevate.png"
-            alt="Elevate"
-            max-height="50"
-            style="width: 80%;"
-          />
-      </div>
+    <v-app-bar app height="70" class="--bg-main" style="width: 100%;"
+      :class="`pa-0 ma-0`" fixed elevation="2">
       
-      </v-toolbar-title>
-    <v-app-bar-nav-icon @click="drawer = !drawer" class="d-flex justify-space-between"/>
-    <h3 v-if="!(mx.isMobile || mx.isTablet)">
-      {{ userSession.name }}
-    </h3>
-    <div v-else class="d-flex justify-center" style="width: 100%;">
-          <img class="py-2 pa-2"
-            src="../../assets/images/Elevate.png"
+      <!-- Left side: Logo and Nav Icon -->
+      <v-toolbar-title class="drawer-title --bg-main align-content-center" style="flex: 0 0 auto;">
+        <div class="d-flex justify-center">
+          <img class="py-2"
+            src="../../assets/images/elevate-white.png"
             alt="Elevate"
             max-height="50"
-            :style="`max-height: ${mx.isMobile ? '80px' : '80px'};`"
+            style="width: 55%;"
           />
+        </div>
+      </v-toolbar-title>
+      
+      <v-app-bar-nav-icon @click="drawer = !drawer" class="text-white" style="flex: 0 0 auto;"/>
+      
+      <!-- Center: Title -->
+      <v-spacer />
+      <h2 class="text-center text-white" style="flex: 0 0 auto;">
+        Power Mac Center Institute for Excellence     
+      </h2>
+      <v-spacer />
+      
+      <!-- Right side: Logout Button -->
+      <div class="mx-2 pa-2" style="flex: 0 0 auto;">    
+        <v-btn v-if="!(mx.isMobile || mx.isTablet)" @click="logoutDialog = true"
+          class="hover-y" color="white" variant="elevated" rounded="pill">
+          Logout
+        </v-btn>
       </div>
-    <v-spacer />
-    <div class="mx-4 pa-2 " >    
-      <v-btn v-if="!(mx.isMobile || mx.isTablet)" @click="logoutDialog = true"
-      class="special-btn" variant="outlined" rounded="pill">Logout</v-btn>
-      <!-- <v-speed-dial
-        location="bottom center"
-        transition="fade-transition"
+    </v-app-bar>
+
+
+  <v-navigation-drawer v-model="drawer" permanent
+    class="--bg-main pt-2">
+      <!-- <v-list-item
+        prepend-avatar="https://randomuser.me/api/portraits/men/85.jpg"
+        title="John Doe"
+        subtitle="john@example.com"
+        nav
       >
-        <template v-slot:activator="{ props: activatorProps }">
-          <v-fab
-            v-bind="activatorProps"
-            size="default"
-            icon>
-            <v-icon>mdi-account</v-icon>
-        </v-fab>
+      </v-list-item>
+
+      <v-divider></v-divider> -->
+
+      <v-list nav class="pa-0">
+        <template v-for="item in menuItems" :key="item.title">
+          <!-- Items without children -->
+          <v-list-item
+            v-if="!item.children"
+            :prepend-icon="item.icon"
+            :title="item.title"
+            :value="item.title"
+            :to="item.to"
+            class="customNav text-white"
+          ></v-list-item>
+
+          <!-- Items with children -->
+          <v-list-group v-else :value="item.title">
+            <template v-slot:activator="{ props }">
+              <v-list-item
+                v-bind="props"
+                :prepend-icon="item.icon"
+                :title="item.title"
+                class="customNav text-white"
+              ></v-list-item>
+            </template>
+
+            <template v-for="child in item.children" :key="child.title">
+              <!-- First level children without nested children -->
+              <v-list-item
+                v-if="!child.children"
+                :prepend-icon="child.icon"
+                :title="child.title"
+                :value="child.title"
+                :to="child.to"
+                class="customNav text-white p-text"
+              ></v-list-item>
+
+              <!-- First level children with nested children -->
+              <v-list-group v-else :value="child.title" sub-group>
+                <template v-slot:activator="{ props }">
+                  <v-list-item
+                    v-bind="props"
+                    :prepend-icon="child.icon"
+                    :title="child.title"
+                  ></v-list-item>
+                </template>
+
+                <v-list-item
+                  v-for="subChild in child.children"
+                  :key="subChild.title"
+                  :prepend-icon="subChild.icon"
+                  :title="subChild.title"
+                  :value="subChild.title"
+                  :to="subChild.to"
+                  color="primary"
+                ></v-list-item>
+              </v-list-group>
+            </template>
+          </v-list-group>
         </template>
-
-        <div key="0" class="" style="width: 120px;">
-          <v-hover>
-              <v-list-item link color="primary" class="bg-grey-lighten-2 text-center" key="1">
-                <span class="mx-2 text-center ">Profile</span>
-              </v-list-item>
-          </v-hover>
-        </div>
-        <div key="0" class="" style="width: 120px;">
-          <v-hover>
-              <v-list-item link color="primary" class="bg-grey-lighten-2 text-center" key="1">
-                <span class="mx-2 text-center ">Logout</span>
-              </v-list-item>
-          </v-hover>
-        </div>
-
-
-
-      </v-speed-dial> -->
-    </div>
-  </v-app-bar>
-
-
-    <v-navigation-drawer v-if="session.user" app
-      :model-value="drawer"
-      @update:model-value="emit('update:modelValue', $event)"
-    :temporary="isMobile"
-    class="--bg-main"
-    disable-resize-watcher
-  >
-    <v-list>
-      <v-list-item @click="drawer = (mx.isMobile || mx.isTablet ? false : true)"
-        v-for="link in activeLinks"
-        :key="link.to"
-        :to="link.to"
-        link class="text-white d-flex customNav"
-      >
-      <div class="d-flex ">
-        <v-icon v-if="link.icon" class="mx-2">{{ link.icon }}</v-icon>
-        <p :class="route.path === link.to ? 'font-weight-bold' : ''">{{ link.text }}</p>
-      </div>    
-      </v-list-item>
-    </v-list>
-    
-    <div class="profile-bottom py-4">
-      <v-list-item class="" link :to="`/${session.user ? session.user.role : ''}/profile`">
-        <div class="d-flex justify-space-between text-white">
-          <div class="d-flex">
-            <v-icon size="30">mdi-account</v-icon>
-            <h3 class="align-self-center mx-2">Profile</h3>
+      </v-list>
+        <template v-slot:append>
+          <div class="d-flex justify-center py-4">
+            <img class="py-2"
+              src="../../assets/images/PMC.png"
+              alt="Elevate"
+              max-height="50"
+              style="width: 55%;"
+            />
           </div>
-          <p class="align-self-center"
-          style="font-size: 12px; font-weight: 600; float: right;"
-          >{{ userSession.role.toUpperCase() }}</p>
-        </div>
-          
-      </v-list-item>
-    </div>
-  </v-navigation-drawer>
+        </template>
+    </v-navigation-drawer>
   <ConfirmDialog 
     v-model="logoutDialog"
     title="Logout"
@@ -117,12 +132,13 @@ import { useDisplay } from 'vuetify'
 import { useRoute, useRouter } from 'vue-router'
 import { useSessionStore } from '@/stores/session'
 import { useMXStore } from '@/stores/mx'
-import ConfirmDialog from './ConfirmDialog.vue'
+import ConfirmDialog from '@/components/ui/ConfirmDialog.vue'
 
 const mx = useMXStore();
 const props = defineProps<{
   modelValue: boolean
 }>()
+
 
 const emit = defineEmits<{
   (e: 'update:modelValue', value: boolean): void
@@ -135,6 +151,34 @@ const router = useRouter()
 const drawer = ref( mx.isMobile || mx.isTablet ? false :  true )
 const userSession = computed(() => session.user || {})
 const logoutDialog = ref(false)
+
+const menuItems = ref<any[]>([
+  { title: 'Profile', icon: 'mdi-account', to: '/profile' },
+  { title: 'Dashboard', icon: 'mdi-home', to: '/dashboard' },
+  { title: 'Manage Trainees', icon: 'mdi-account-group', to: '/trainees' },
+  { title: 'Calendar', icon: 'mdi-calendar-month', to: '/calendar' },
+  { title: 'Manage Schedule', icon: 'mdi-folder', to: '/schedule' },
+  { title: 'Training', icon: 'mdi-file-document-edit', to: '/training',
+    children: [
+      { title: 'Quizzes & Feedback', icon: 'mdi-star', to: '/training/quiz' },
+      { title: 'Video Modules', icon: 'mdi-movie-play', to: '/training/test' },
+    ]
+  },
+  { title: 'Generated Email', icon: 'mdi-email', to: '/email' },
+
+  // { title: 'Content', icon: 'mdi-file-document-multiple',
+  //   children: [
+  //     { title: 'Articles', icon: 'mdi-file-document', to: '/reset' },
+  //     { title: 'Categories', icon: 'mdi-folder',
+  //       children: [
+  //         { title: 'Main Categories', icon: 'mdi-folder-open', to: '/content/categories/main' },
+  //         { title: 'Sub Categories', icon: 'mdi-folder-outline', to: '/content/categories/sub' },
+  //       ]
+  //     },
+  //   ]
+  // },
+]);
+
 
 const sidebarLinks = ref<any>([
   { to: '/', text: 'Home', role: 'admin|manager|supervisor' },
@@ -162,19 +206,15 @@ const sidebarLinks = ref<any>([
   { role: 'manager', to: '/manager/performance_review', text: 'Performance Review', icon: 'mdi-star' },
   { role: 'manager', to: '/manager/reports', text: 'Report', icon: 'mdi-finance' },
     // Admin links
-  { role: 'admin', to: '/admin', text: 'Dashboard', icon: 'mdi-view-dashboard' },
-  { role: 'admin', to: '/admin/trainers', text: 'Trainers Profile', icon: 'mdi-account-supervisor' },
-  { role: 'admin', to: '/admin/trainings', text: 'Trainings', icon: 'mdi-file-document-check-outline' },
-  { role: 'admin', to: '/admin/calendar', text: 'Calendar of Activities', icon: 'mdi-calendar-month' },
-  { role: 'admin', to: '/admin/trainer_availability', text: 'Trainer Availability', icon: 'mdi-account-clock' },
-  { role: 'admin', to: '/admin/performance_review', text: 'Performance Review', icon: 'mdi-star' },
-  { role: 'admin', to: '/admin/reports', text: 'Report', icon: 'mdi-finance' },
+  { role: 'admin', to: '/test', text: 'Dashboard', icon: 'mdi-view-dashboard' },
+  { role: 'admin', to: '/sidebar', text: 'Trainers Profile', icon: 'mdi-account-supervisor' },
+  { role: 'admin', to: '/quiz', text: 'Trainings', icon: 'mdi-file-document-check-outline' },
 
 ])
 
 // Filter sidebar links based on the user's role
 const activeLinks = computed(() => {
-  return sidebarLinks.value.filter((link:any) => link.role === userSession.value.role)
+  return sidebarLinks.value.filter((link:any) => link.role === 'admin')
 })
 
 
